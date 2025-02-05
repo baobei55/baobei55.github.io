@@ -274,9 +274,8 @@
         <h2 class="message-title">ถึงเธอ</h2>
         <p class="message-body">
           ขอให้ไม่เจ็บป่วย และมีความรักที่ดี ความรักที่ทำให้หัวใจอบอุ่นและมีความสุข ไม่ว่าจะเป็นความรักจากครอบครัว เพื่อนฝูง หรือคนพิเศษ ขอให้ความรักเหล่านั้นเติมเต็มชีวิตของเธอให้เต็มไปด้วยความสุขและมีความหมายนะครับ
-          
         </p>
-        <div class="love-signature">จากคนน่ารัก❤️</div>
+        <div class="love-signature">จากคนหล่อของเธอ❤️</div>
       </div>
       <!-- Floating hearts decoration -->
       <div class="hearts-decoration" id="heartsContainer"></div>
@@ -295,20 +294,14 @@
     </button>
   </div>
 
-
   <script>
-    function toggleCard(card) {
-      card.classList.toggle('opened');
-      // ผมไม่รู้ๆ
-      if (card.classList.contains('opened')) {
-        playMusic();
-      }
-    }
-
-   
     let isMusicPlaying = false;
     const music = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
+
+    function toggleCard(card) {
+      card.classList.toggle('opened');
+    }
 
     function toggleMusic() {
       if (isMusicPlaying) {
@@ -335,7 +328,14 @@
       musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
     }
 
-    // ผมไม่รุ้ๆ
+    // เพิ่มการเล่นเสียงเมื่อผู้ใช้คลิกที่หน้าจอครั้งแรก
+    document.body.addEventListener('click', function () {
+      if (!isMusicPlaying) {
+        playMusic();
+      }
+    }, { once: true });
+
+    // สร้างหัวใจลอย
     function createFloatingHearts() {
       const container = document.getElementById('heartsContainer');
       const heartCount = 15;
@@ -351,12 +351,6 @@
     }
 
     createFloatingHearts();
-     // 👇 เพิ่มโค้ดนี้ตรงนี้!
-    document.body.addEventListener('click', function() {
-      if (!isMusicPlaying) {
-        playMusic();
-      }
-    }, { once: true });
   </script>
 </body>
 
