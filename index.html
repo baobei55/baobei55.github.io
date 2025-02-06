@@ -312,6 +312,12 @@
     }
 
     function playMusic() {
+      // ใช้ AudioContext เพื่อเล่นเสียงบน iOS
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioContext.createMediaElementSource(music);
+      source.connect(audioContext.destination);
+
+      // พยายามเล่นเสียง
       music.play()
         .then(() => {
           isMusicPlaying = true;
