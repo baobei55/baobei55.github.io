@@ -227,33 +227,6 @@
         font-size: 0.9rem;
       }
     }
-
-    .audio-controls {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .audio-controls button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #ff4d6d;
-      font-size: 1.5rem;
-      padding: 5px;
-      transition: transform 0.2s;
-    }
-
-    .audio-controls button:hover {
-      transform: scale(1.1);
-    }
   </style>
 </head>
 
@@ -273,45 +246,30 @@
       <div class="message-content">
         <h2 class="message-title">ถึงเธอ</h2>
         <p class="message-body">
-          ขออวยพรให้เธอมีความรักที่ดี ความรักที่ทำให้หัวใจอบอุ่นและมีความสุข ไม่ว่าจะเป็นความรักจากครอบครัว เพื่อนฝูง หรือคนพิเศษ ขอให้ความรักเหล่านั้นเติมเต็มชีวิตของเธอให้เต็มไปด้วยความสุขและมีความหมายนะครับ
+          ขอให้ไม่เจ็บป่วย และมีความรักที่ดี ความรักที่ทำให้หัวใจอบอุ่นและมีความสุข ไม่ว่าจะเป็นความรักจากครอบครัว เพื่อนฝูง หรือคนพิเศษ ขอให้ความรักเหล่านั้นเติมเต็มชีวิตของเธอให้เต็มไปด้วยความสุขและมีความหมายนะครับ
         </p>
-        <div class="love-signature"> (,,• ֊ •,,)❤️</div>
+        <div class="love-signature">จากคนน่ารัก❤️</div>
       </div>
       <!-- Floating hearts decoration -->
       <div class="hearts-decoration" id="heartsContainer"></div>
     </div>
   </div>
 
-  <!-- Add audio element and controls -->
+  <!-- Add audio element -->
   <audio id="bgMusic" loop>
     <source src="songs/OneMyChoose.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
-  <div class="audio-controls">
-    <button onclick="toggleMusic()" id="musicToggle">
-      <i class="fas fa-volume-up"></i>
-    </button>
-  </div>
-
   <script>
     let isMusicPlaying = false;
     const music = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-
-    // เริ่มเล่นเสียงเมื่อผู้ใช้คลิกครั้งแรก
-    document.body.addEventListener('click', function () {
-      if (!isMusicPlaying) {
-        playMusic();
-      }
-    }, { once: true });
 
     // ฟังก์ชันเล่นเสียง
     function playMusic() {
       music.play()
         .then(() => {
           isMusicPlaying = true;
-          musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
         })
         .catch((error) => {
           console.log("Music playback failed:", error);
@@ -322,10 +280,9 @@
     function pauseMusic() {
       music.pause();
       isMusicPlaying = false;
-      musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
     }
 
-    // หยุดเสียงเมื่อผู้ใช้ออกจากหน้าเว็บ
+    // ฟังก์ชันหยุดเสียงเมื่อผู้ใช้ออกจากหน้าเว็บ
     window.addEventListener('beforeunload', function () {
       if (isMusicPlaying) {
         pauseMusic();
@@ -334,12 +291,7 @@
 
     function toggleCard(card) {
       card.classList.toggle('opened');
-    }
-
-    function toggleMusic() {
-      if (isMusicPlaying) {
-        pauseMusic();
-      } else {
+      if (!isMusicPlaying) {
         playMusic();
       }
     }
