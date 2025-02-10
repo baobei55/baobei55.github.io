@@ -299,6 +299,39 @@
     const music = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
 
+    // เริ่มเล่นเสียงเมื่อผู้ใช้คลิกครั้งแรก
+    document.body.addEventListener('click', function () {
+      if (!isMusicPlaying) {
+        playMusic();
+      }
+    }, { once: true });
+
+    // ฟังก์ชันเล่นเสียง
+    function playMusic() {
+      music.play()
+        .then(() => {
+          isMusicPlaying = true;
+          musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+        })
+        .catch((error) => {
+          console.log("Music playback failed:", error);
+        });
+    }
+
+    // ฟังก์ชันหยุดเสียง
+    function pauseMusic() {
+      music.pause();
+      isMusicPlaying = false;
+      musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    }
+
+    // หยุดเสียงเมื่อผู้ใช้ออกจากหน้าเว็บ
+    window.addEventListener('beforeunload', function () {
+      if (isMusicPlaying) {
+        pauseMusic();
+      }
+    });
+
     function toggleCard(card) {
       card.classList.toggle('opened');
     }
@@ -310,36 +343,6 @@
         playMusic();
       }
     }
-
-    function playMusic() {
-      // ใช้ AudioContext เพื่อเล่นเสียงบน iOS
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const source = audioContext.createMediaElementSource(music);
-      source.connect(audioContext.destination);
-
-      // พยายามเล่นเสียง
-      music.play()
-        .then(() => {
-          isMusicPlaying = true;
-          musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-        })
-        .catch((error) => {
-          console.log("Music playback failed:", error);
-        });
-    }
-
-    function pauseMusic() {
-      music.pause();
-      isMusicPlaying = false;
-      musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    }
-
-    // เพิ่มการเล่นเสียงเมื่อผู้ใช้คลิกที่หน้าจอครั้งแรก
-    document.body.addEventListener('click', function () {
-      if (!isMusicPlaying) {
-        playMusic();
-      }
-    }, { once: true });
 
     // สร้างหัวใจลอย
     function createFloatingHearts() {
